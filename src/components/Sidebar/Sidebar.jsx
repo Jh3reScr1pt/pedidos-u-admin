@@ -7,28 +7,35 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
       <div className="sidebar-options">
+        <h3>Pedidos</h3>
+        <NavLink to='/orders' className="sidebar-option">
+            <img src={assets.order_icon} alt="" />
+            <p>Órdenes</p>
+        </NavLink>
         <h3>Items</h3>
         <NavLink to='/add' className="sidebar-option">
             <img src={assets.add_icon} alt="" />
-            <p>Add Items</p>
+            <p>Agregar</p>
         </NavLink>
         <NavLink to='/list' className="sidebar-option">
             <img src={assets.order_icon} alt="" />
-            <p>List Items</p>
+            <p>Lista</p>
         </NavLink>
-        <NavLink to='/orders' className="sidebar-option">
+
+        <h3>Categorias</h3>
+        <NavLink to='/addCategory' className="sidebar-option">
+            <img src={assets.add_icon} alt="" />
+            <p>Agregar</p>
+        </NavLink>
+        <NavLink to='/listCategory' className="sidebar-option">
             <img src={assets.order_icon} alt="" />
-            <p>Orders</p>
+            <p>Lista</p>
         </NavLink>
 
         <h3>Usuarios</h3>
-        <NavLink to='/addUser' className="sidebar-option">
-            <img src={assets.add_icon} alt="" />
-            <p>Add User</p>
-        </NavLink>
         <NavLink to='/listUser' className="sidebar-option">
             <img src={assets.order_icon} alt="" />
-            <p>List Users</p>
+            <p>Lista</p>
         </NavLink>
       </div>
     </div>

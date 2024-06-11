@@ -1,4 +1,4 @@
-.order-item{
+.order-item {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
     align-items: start;
@@ -9,34 +9,60 @@
     font-size: 14px;
     color: #505050;
 }
-.order-item-food,.order-item-name{
+
+.order-item-food, .order-item-name {
     font-weight: 600;
 }
-.order-item-name{
+
+.order-item-name {
     margin-top: 30px;
     margin-bottom: 5px;
 }
-.order-item-address{
+
+.order-item-address {
     margin-bottom: 10px;
 }
-.order-item select{
+
+.order-item select {
     background-color: #ffe8e4;
     border: 1px solid tomato;
-    width: max(10vw,120px);
+    width: max(10vw, 120px);
     padding: 10px;
-    outline:none;
+    outline: none;
 }
-@media(max-width:1000px){
-    .order-item{
+
+/* Estilos para el botón de actualización del estado */
+.order-item button {
+    background-color: tomato;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.order-item button:hover {
+    background-color: #ff6347; /* Cambia a un color más oscuro al pasar el ratón */
+}
+
+@media (max-width: 1000px) {
+    .order-item {
         font-size: 12px;
         grid-template-columns: 0.5fr 2fr 1fr;
         padding: 15px 8px;
     }
-    .order-item select{
+    .order-item select {
         padding: 5px;
         font-size: 12px;
     }
-    .order-item img{
+    .order-item img {
         width: 40px;
+    }
+    .order-item button {
+        padding: 8px 16px;
+        font-size: 12px;
     }
 }

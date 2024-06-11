@@ -1,19 +1,36 @@
-import React, { useState } from 'react'
-import './Add.css'
-import { assets,url } from '../../../assets/assets';
+import React, { useState, useEffect } from 'react';
+import './Add.css';
+import { assets, url } from '../../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Add = () => {
-
     const [data, setData] = useState({
         name: "",
         description: "",
         price: "",
-        category: "Salad"
+        category: ""
     });
 
     const [image, setImage] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get(`${url}/api/category/activelist`);
+                if (response.data.success) {
+                    setCategories(response.data.data);
+                } else {
+                    toast.error("Error al cargar las categorías");
+                }
+            } catch (error) {
+                toast.error("Error de red al cargar las categorías");
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -29,63 +46,58 @@ const Add = () => {
                 name: "",
                 description: "",
                 price: "",
-                category: "Salad"
-            })
+                category: categories.length > 0 ? categories[0].name : ""
+            });
             setImage(false);
-            toast.success(response.data.message)
+            toast.success(response.data.message);
+        } else {
+            toast.error(response.data.message);
         }
-        else{
-            toast.error(response.data.message)
-        }
-    }
+    };
 
     const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setData(data => ({ ...data, [name]: value }))
-    }
+        setData(data => ({ ...data, [name]: value }));
+    };
 
     return (
         <div className='add'>
+        <h1>Crear Item / Plato</h1>
             <form className='flex-col' onSubmit={onSubmitHandler}>
                 <div className='add-img-upload flex-col'>
-                    <p>Upload image</p>
+                    <p>Subir imagen</p>
                     <label htmlFor="image">
                         <img src={!image ? assets.upload_area : URL.createObjectURL(image)} alt="" />
                     </label>
                     <input onChange={(e) => { setImage(e.target.files[0]) }} type="file" id="image" hidden required />
                 </div>
                 <div className='add-product-name flex-col'>
-                    <p>Product name</p>
-                    <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Type here' required />
+                    <p>Nombre</p>
+                    <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Escribe aquí' required />
                 </div>
                 <div className='add-product-description flex-col'>
-                    <p>Product description</p>
-                    <textarea name='description' onChange={onChangeHandler} value={data.description} type="text" rows={6} placeholder='Write content here' required />
+                    <p>Descripción</p>
+                    <textarea name='description' onChange={onChangeHandler} value={data.description} type="text" rows={6} placeholder='Escribe el contenido aquí' required />
                 </div>
                 <div className='add-category-price'>
                     <div className='add-category flex-col'>
-                        <p>Product category</p>
-                        <select name='category' onChange={onChangeHandler} >
-                            <option value="Salad">Salad</option>
-                            <option value="Rolls">Rolls</option>
-                            <option value="Deserts">Deserts</option>
-                            <option value="Sandwich">Sandwich</option>
-                            <option value="Cake">Cake</option>
-                            <option value="Pure Veg">Pure Veg</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Noodles">Noodles</option>
+                        <p>Categoría</p>
+                        <select name='category' onChange={onChangeHandler} value={data.category} required>
+                            {categories.map((category) => (
+                                <option key={category._id} value={category.name}>{category.name}</option>
+                            ))}
                         </select>
                     </div>
                     <div className='add-price flex-col'>
-                        <p>Product Price</p>
-                        <input type="Number" name='price' onChange={onChangeHandler} value={data.price} placeholder='$25' />
+                        <p>Precio</p>
+                        <input type="Number" name='price' onChange={onChangeHandler} value={data.price} placeholder='Bs 25' required />
                     </div>
                 </div>
-                <button type='submit' className='add-btn' >ADD</button>
+                <button type='submit' className='add-btn'>AGREGAR</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default Add
+export default Add;

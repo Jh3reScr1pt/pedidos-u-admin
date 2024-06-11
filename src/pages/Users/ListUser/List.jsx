@@ -19,18 +19,7 @@ const List = () => {
     }
   }
 
-  const removeFood = async (foodId) => {
-    const response = await axios.post(`${url}/api/food/remove`,{
-      id:foodId
-    })
-    await fetchList();
-    if (response.data.success) {
-      toast.success(response.data.message);
-    }
-    else {
-      toast.error("Error")
-    }
-  }
+  
 
   useEffect(()=>{
     fetchList();
@@ -38,21 +27,19 @@ const List = () => {
 
   return (
     <div className='list add flex-col'>
-        <p>All Foods List</p>
+        <h1>Lista de las Usuarios</h1>
         <div className='list-table'>
-          <div className="list-table-format title">
+          <div className="list-table-format-user title">
             <b>Nombre (s)</b>
             <b>Apellidos</b>
-            <b>Category</b>
-            <b>Action</b>
+            <b>Correo Institucional</b>
           </div>
           {list.map((user,index)=>{
             return (
-              <div key={index} className='list-table-format'>
+              <div key={index} className='list-table-format-user'>
                 <p>{user.name}</p>
                 <p>{user.lastname}</p>
                 <p>{user.email}</p>
-                <p className='cursor' onClick={()=>removeFood(user._id)}>x</p>
               </div>
             )
           })}
